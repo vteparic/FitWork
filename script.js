@@ -44,7 +44,12 @@ workoutForm.addEventListener("submit", function (event) {
         weight: weight
     };
 
-    workouts.push(workout);
+    if (!validateWorkout(workout)) {
+    alert("Please fill in all workout fields.");
+    return;
+}
+
+workouts.push(workout);
 
     localStorage.setItem("workouts", JSON.stringify(workouts));
 
