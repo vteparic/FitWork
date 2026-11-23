@@ -1,0 +1,24 @@
+{
+  "name": "fitwork",
+  "version": "1.0.0",
+  "description": "FitWork is a simple workout tracking application that allows users to record workout information and view their saved workout history.",
+  "main": "script.js",
+  "scripts": {
+  "test": "vitest run"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vteparic/FitWork.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/vteparic/FitWork/issues"
+  },
+  "homepage": "https://github.com/vteparic/FitWork#readme",
+  "devDependencies": {
+    "vitest": "^5.1.1"
+  }
+}
