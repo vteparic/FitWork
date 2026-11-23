@@ -19,6 +19,18 @@ function editWorkout(index) {
 
     workoutForm.scrollIntoView({ behavior: "smooth" });
 }
+function confirmDeleteWorkout(index) {
+    const confirmed = confirm("Are you sure you want to delete this workout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    if (deleteWorkout(workouts, index)) {
+        localStorage.setItem("workouts", JSON.stringify(workouts));
+        displayWorkouts();
+    }
+}
 function displayWorkouts() {
     workoutHistory.innerHTML = "";
 
@@ -38,6 +50,7 @@ function displayWorkouts() {
             <p><strong>Reps:</strong> ${workout.reps}</p>
             <p><strong>Weight:</strong> ${workout.weight} lbs</p>
             <button type="button" onclick="editWorkout(${index})">Edit</button>
+            <button type="button" onclick="confirmDeleteWorkout(${index})">Delete</button>
         `;
 
         workoutHistory.appendChild(workoutCard);

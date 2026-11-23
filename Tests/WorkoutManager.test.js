@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import workoutManager from "../workoutManager.js";
 
-const { updateWorkout } = workoutManager;
+const { updateWorkout, deleteWorkout } = workoutManager;
 
 describe("Update Workout", () => {
     it("updates an existing workout", () => {
@@ -26,4 +26,28 @@ describe("Update Workout", () => {
         expect(result).toBe(false);
         expect(workouts[0].weight).toBe("135");
     });
+});
+describe("Delete Workout", () => {
+  it("deletes an existing workout", () => {
+    const workouts = [
+      { exercise: "Bench Press", weight: "135" }
+    ];
+
+    const result = deleteWorkout(workouts, 0);
+
+    expect(result).toBe(true);
+    expect(workouts).toHaveLength(0);
+  });
+});
+describe("Delete Workout Invalid Index", () => {
+  it("rejects an invalid workout index", () => {
+    const workouts = [
+      { exercise: "Bench Press", weight: "135" }
+    ];
+
+    const result = deleteWorkout(workouts, 5);
+
+    expect(result).toBe(false);
+    expect(workouts).toHaveLength(1);
+  });
 });
