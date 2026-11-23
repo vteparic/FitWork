@@ -2,7 +2,23 @@ const workoutForm = document.getElementById("workout-form");
 const workoutHistory = document.getElementById("workout-history");
 
 let workouts = JSON.parse(localStorage.getItem("workouts")) || [];
+let editingIndex = -1;
 
+function editWorkout(index) {
+    const workout = workouts[index];
+
+    document.getElementById("workout-date").value = workout.date;
+    document.getElementById("exercise").value = workout.exercise;
+    document.getElementById("sets").value = workout.sets;
+    document.getElementById("reps").value = workout.reps;
+    document.getElementById("weight").value = workout.weight;
+
+    editingIndex = index;
+
+    workoutForm.querySelector("button[type='submit']").textContent = "Update Workout";
+
+    workoutForm.scrollIntoView({ behavior: "smooth" });
+}
 function displayWorkouts() {
     workoutHistory.innerHTML = "";
 
@@ -11,7 +27,7 @@ function displayWorkouts() {
         return;
     }
 
-    workouts.forEach(function (workout) {
+    workouts.forEach(function (workout, index) {
         const workoutCard = document.createElement("div");
         workoutCard.classList.add("workout-card");
 
@@ -21,6 +37,7 @@ function displayWorkouts() {
             <p><strong>Sets:</strong> ${workout.sets}</p>
             <p><strong>Reps:</strong> ${workout.reps}</p>
             <p><strong>Weight:</strong> ${workout.weight} lbs</p>
+            <button type="button" onclick="editWorkout(${index})">Edit</button>
         `;
 
         workoutHistory.appendChild(workoutCard);
@@ -44,7 +61,23 @@ workoutForm.addEventListener("submit", function (event) {
         weight: weight
     };
 
+    if (!validateWorkout(workout)) {
+    alert("Please fill in all workout fields.");
+    return;
+}
+
+if (editingIndex === -1) {
     workouts.push(workout);
+} else {
+    if (!updateWorkout(workouts, editingIndex, workout)) {
+        alert("Unable to update workout.");
+        return;
+    }
+
+    editingIndex = -1;
+
+    workoutForm.querySelector("button[type='submit']").textContent = "Save Workout";
+}
 
     localStorage.setItem("workouts", JSON.stringify(workouts));
 
